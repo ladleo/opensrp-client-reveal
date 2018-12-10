@@ -226,11 +226,13 @@ public class ListTaskPresenter implements ListTaskContract.PresenterCallBack {
         Log.d(TAG, "Selected Campaign : " + TextUtils.join(",", name));
         Log.d(TAG, "Selected Campaign Ids: " + TextUtils.join(",", value));
 
-        prefsUtil.setCurrentCampaign(name.get(0));
-        prefsUtil.setCurrentCampaignId(value.get(0));
-        listTaskView.setCampaign(name.get(0));
-        changedCurrentSelection = true;
-        unlockDrawerLayout();
+        if (!name.isEmpty()) {
+            prefsUtil.setCurrentCampaign(name.get(0));
+            prefsUtil.setCurrentCampaignId(value.get(0));
+            listTaskView.setCampaign(name.get(0));
+            changedCurrentSelection = true;
+            unlockDrawerLayout();
+        }
     }
 
     public void onDrawerClosed() {

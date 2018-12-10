@@ -19,20 +19,25 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
 
     @Override
     protected void scheduleJobs() {
+        LocationStructureServiceJob.scheduleJobImmediately(LocationStructureServiceJob.TAG);
+        CampaignServiceJob.scheduleJobImmediately(CampaignServiceJob.TAG);
+        SyncTaskServiceJob.scheduleJobImmediately(SyncTaskServiceJob.TAG);
+        SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG);
+
+
+        LocationStructureServiceJob.scheduleJob(LocationStructureServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
+                .SYNC_INTERVAL_IN_MINUTES));
+
+        CampaignServiceJob.scheduleJob(CampaignServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
+                .SYNC_INTERVAL_IN_MINUTES));
+
+        SyncTaskServiceJob.scheduleJob(SyncTaskServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
+                .SYNC_INTERVAL_IN_MINUTES));
 
         SyncServiceJob.scheduleJob(SyncServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
                 .SYNC_INTERVAL_IN_MINUTES));
 
-
-        CampaignServiceJob.scheduleJob(SyncServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
-                .SYNC_INTERVAL_IN_MINUTES));
-
-        SyncTaskServiceJob.scheduleJob(SyncServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
-                .SYNC_INTERVAL_IN_MINUTES));
-
-
-        LocationStructureServiceJob.scheduleJob(SyncServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.SYNC_INTERVAL_IN_MINUTES), getFlexValue(BuildConfig
-                .SYNC_INTERVAL_IN_MINUTES));
+        new TestDataUtils().createTasks();
     }
 
 }
